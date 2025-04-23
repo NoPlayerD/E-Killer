@@ -1,5 +1,5 @@
 ﻿Service.StartService();
-Informer.PrintInfo("Service is running. 'Ctrl-C' to stop the service & exit..\n\n\n");
+Informer.PrintInfo("Service is running. 'Ctrl-C' to stop the service & exit..\n\n");
 
 bool shouldExit = false;
 while (!shouldExit) { Console.ReadKey(intercept: true); }
