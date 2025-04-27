@@ -24,15 +24,26 @@ public static class Service
     {
         Console.WriteLine("\n\n");
 
-        if (File.Exists(@"C:\kill.txt"))
+        foreach (var disk in DriveInfo.GetDrives())
         {
-            Informer.PrintSuccess("Found the file (C:/kill.txt)");
+            var file = Path.Combine(disk.Name, "kill.ksk");
 
-            await Task.Run(() => DoWork(operations.services));
-            await Task.Run(() => DoWork(operations.tasks));
+            Informer.PrintInfo($"Searching drive ({disk.Name})");
+
+            if (File.Exists(file))
+            {
+                Informer.PrintSuccess($"Found the file ({file})");
+
+                await Task.Run(() => DoWork(operations.services));
+                await Task.Run(() => DoWork(operations.tasks));
+                break;
+            }
+            else
+            { Informer.PrintError($"Couldn't find the file ({file})"); }
+
+            Console.WriteLine("\n");
         }
-        else
-        { Informer.PrintError("Couldn't find the file (C:/kill.txt)"); }
+
     }
 
     private static void DoWork(operations input)
