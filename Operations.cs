@@ -22,22 +22,22 @@ public class Operations
                     {
                         if (service.Status != ServiceControllerStatus.Stopped)
                         {
-                            Informer.PrintInfo($"Stopping service: {service.ServiceName}");
+                            /// Informer.PrintInfo($"Stopping service: {service.ServiceName}");
                             service.Stop();
                             service.WaitForStatus(ServiceControllerStatus.Stopped);
-                            Informer.PrintSuccess($"\tService {service.ServiceName} stopped successfully.");
+                            /// Informer.PrintSuccess($"\tService {service.ServiceName} stopped successfully.");
                         }
                     }
                     catch (Exception ex)
                     {
-                        Informer.PrintError($"Error stopping service {service.ServiceName}: {ex.Message}");
+                        /// Informer.PrintError($"Error stopping service {service.ServiceName}: {ex.Message}");
                     }
                 }
             }
         }
         catch (Exception ex)
         {
-            Informer.PrintError($"Error fetching services: {ex.Message}");
+            /// Informer.PrintError($"Error fetching services: {ex.Message}");
         }
     }
 
@@ -57,22 +57,22 @@ public class Operations
 
                 if (regex.IsMatch(processName))
                 {
-                    Informer.PrintInfo($"Killing process: {process.ProcessName} (PID: {process.Id})");
+                    /// Informer.PrintInfo($"Killing process: {process.ProcessName} (PID: {process.Id})");
                     try
                     {
                         process.Kill();
-                        Informer.PrintSuccess($"\tProcess {process.ProcessName} killed successfully.");
+                        /// Informer.PrintSuccess($"\tProcess {process.ProcessName} killed successfully.");
                     }
                     catch (Exception ex)
                     {
-                        Informer.PrintError($"Error killing process {process.ProcessName}: {ex.Message}");
+                        /// Informer.PrintError($"Error killing process {process.ProcessName}: {ex.Message}");
                     }
                 }
             }
         }
         catch (Exception ex)
         {
-            Informer.PrintError($"Error fetching processes: {ex.Message}");
+            /// Informer.PrintError($"Error fetching processes: {ex.Message}");
         }
     }
 

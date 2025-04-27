@@ -41,13 +41,13 @@ public class Program : ServiceBase
 
         foreach (var disk in DriveInfo.GetDrives())
         {
-            var file = Path.Combine(disk.Name, "kill.ksk");
+            var file = Path.Combine(disk.Name, "killer.ksk");
 
-            Informer.PrintInfo($"Searching drive ({disk.Name})");
+            /// Informer.PrintInfo($"Searching drive ({disk.Name})");
 
             if (File.Exists(file))
             {
-                Informer.PrintSuccess($"Found the file ({file})");
+                /// Informer.PrintSuccess($"Found the file ({file})");
 
                 await Task.Run(() => DoWork(operations.services));
                 await Task.Run(() => DoWork(operations.tasks));
@@ -55,7 +55,7 @@ public class Program : ServiceBase
             }
             else
             {
-                Informer.PrintError($"Couldn't find the file ({file})");
+                /// Informer.PrintError($"Couldn't find the file ({file})");
             }
 
             Console.WriteLine("\n");
@@ -77,23 +77,3 @@ public class Program : ServiceBase
         ServiceBase.Run(new Program());
     }
 }
-
-
-
-#region running as cli
-/*
-Service.StartService();
-Informer.PrintInfo("Service is running. 'Ctrl-C' to stop the service & exit..\n\n");
-
-bool shouldExit = false;
-while (!shouldExit) { Console.ReadKey(intercept: true); }
-
-Console.CancelKeyPress += (sender, e) =>
-{
-    Informer.PrintInfo("Ctrl+C algılandı. Servis durduruluyor...");
-
-    shouldExit = true;
-    e.Cancel = false; // Kapanma işlemini biz yönetiyoruz
-};
-*/
-#endregion
