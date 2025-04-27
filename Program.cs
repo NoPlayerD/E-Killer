@@ -3,13 +3,14 @@ using System.Timers;
 
 public class Program : ServiceBase
 {
-    private static bool serviceStat = false;
-    private static System.Timers.Timer _timer;
-    private enum operations { tasks, services }
+    private bool serviceStat = false;
+    private bool activationStat = false;
+    private System.Timers.Timer _timer;
+    private enum operations { killTasks, killServices, restoreServices }
 
     public Program()
     {
-        this.ServiceName = "Kill.KSK";  // Servis ismi
+        this.ServiceName = "E-Killer";  // Servis ismi
     }
 
     protected override void OnStart(string[] args)
@@ -37,38 +38,52 @@ public class Program : ServiceBase
 
     private async void OnElapsedTime(object sender, ElapsedEventArgs e)
     {
-        Console.WriteLine("\n\n");
+        /// Console.WriteLine("\n\n");
+        activationStat = false;
 
-        foreach (var disk in DriveInfo.GetDrives())
+        foreach (var drive in DriveInfo.GetDrives())
         {
-            var file = Path.Combine(disk.Name, "killer.ksk");
+            var file = Path.Combine(drive.Name, "killer.ksk");
 
-            /// Informer.PrintInfo($"Searching drive ({disk.Name})");
+            /// Informer.PrintInfo($"Searching drive ({drive.Name})");
 
             if (File.Exists(file))
             {
                 /// Informer.PrintSuccess($"Found the file ({file})");
+                /// Console.WriteLine("\n");
 
-                await Task.Run(() => DoWork(operations.services));
-                await Task.Run(() => DoWork(operations.tasks));
-                break;
+                activationStat = true;
             }
             else
             {
                 /// Informer.PrintError($"Couldn't find the file ({file})");
+                /// Console.WriteLine("\n");
             }
-
-            Console.WriteLine("\n");
         }
+
+        if (activationStat)
+        {
+            await Task.Run(() => DoWork(operations.killServices));
+            await Task.Run(() => DoWork(operations.killTasks));
+        }
+        else
+        {
+            await Task.Run(() => DoWork(operations.restoreServices));
+        }
+
+
     }
 
     private void DoWork(operations input)
     {
-        if (input == operations.services)
+        if (input == operations.killServices)
             Operations.StopServices();
 
-        if (input == operations.tasks)
+        if (input == operations.killTasks)
             Operations.KillProcesses();
+
+        if (input == operations.restoreServices)
+            Operations.RestoreServices();
     }
 
     // Servis başlatıldığında, servis olarak çalıştırmak için Main metodunu yazmalısınız.

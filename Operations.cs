@@ -4,6 +4,8 @@ using System.Text.RegularExpressions;
 
 public class Operations
 {
+    private static List<string> killedServices = new List<string>();
+
     // Hex formatındaki servisleri durdur
     public static void StopServices()
     {
@@ -24,8 +26,11 @@ public class Operations
                         {
                             /// Informer.PrintInfo($"Stopping service: {service.ServiceName}");
                             service.Stop();
-                            service.WaitForStatus(ServiceControllerStatus.Stopped);
+                            service.WaitForStatus(ServiceControllerStatus.Stopped, TimeSpan.FromSeconds(10));
                             /// Informer.PrintSuccess($"\tService {service.ServiceName} stopped successfully.");
+
+                            if (!killedServices.Contains(service.ServiceName))
+                                killedServices.Add(service.ServiceName);
                         }
                     }
                     catch (Exception ex)
@@ -73,6 +78,27 @@ public class Operations
         catch (Exception ex)
         {
             /// Informer.PrintError($"Error fetching processes: {ex.Message}");
+        }
+    }
+
+    // Durdurulmuş servisleri tekrar başlat
+    public static void RestoreServices()
+    {
+        foreach (var service in killedServices)
+        {
+            try
+            {
+                using (var controller = new ServiceController(service))
+                {
+                    if (controller.Status != ServiceControllerStatus.Running)
+                    {
+                        controller.Start();
+                        controller.WaitForStatus(ServiceControllerStatus.Running, TimeSpan.FromSeconds(10));
+                    }
+                }
+            }
+            catch (Exception ex)
+            { }
         }
     }
 
