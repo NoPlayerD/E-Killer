@@ -6,7 +6,6 @@ public class Operations
 {
     private static List<string> killedServices = new List<string>();
 
-    // Hex formatındaki servisleri durdur
     public static void StopServices()
     {
         string servicePattern = @"^[a-f0-9]{16}$";  // Servis ismi için hex formatı
@@ -46,7 +45,6 @@ public class Operations
         }
     }
 
-    // Hex formatındaki exe dosyalarını sonlandır
     public static void KillProcesses()
     {
         string processPattern = @"^[a-f0-9]{16}\.exe$";  // Exe dosyası için hex formatı
@@ -81,7 +79,6 @@ public class Operations
         }
     }
 
-    // Durdurulmuş servisleri tekrar başlat
     public static void RestoreServices()
     {
         foreach (var service in killedServices)

@@ -86,7 +86,6 @@ public class Program : ServiceBase
             Operations.RestoreServices();
     }
 
-    // Servis başlatıldığında, servis olarak çalıştırmak için Main metodunu yazmalısınız.
     public static void Main()
     {
         ServiceBase.Run(new Program());
