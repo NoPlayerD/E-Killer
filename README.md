@@ -24,7 +24,7 @@ So, I thought, “Hey, how about a program that lets me play around with a schoo
 ## How it works:
 
 1. Install E-Killer as a service to the windows smart board (dont ask me how you'd do that)
-2. Prepare your USB drive (shhh.. nobody told you to create the 'killer.ksk' file!)
+2. Prepare your USB drive (shhh.. Did anyone actually tell you to create the *'killer.ksk'* file? I doubt it!)
 3. Watch as it unlocks the board (because why not?).
 4. Realize you've just wasted your time reading this and proceed to **wonder what you were thinking**.
 
@@ -38,7 +38,7 @@ So, I thought, “Hey, how about a program that lets me play around with a schoo
 
 1. Download the source code (don’t ask why you need to).
 2. Compile it for windows
-3. Install it as a service (to the board, i guess?)
+3. Install it as a service (it probably needs to be installed on the board, right?)
 4. After preparing your usb device, plug it in
 5. Watch in awe as you unlock a useless device that was never meant to be unlocked.
 
