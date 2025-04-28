@@ -7,7 +7,7 @@
     <Nullable>enable</Nullable>
     
     <SelfContained>true</SelfContained>
-    <publishsinglefile>true</publishsinglefile>
+    <PublishSingleFile>true</PublishSingleFile>
   </PropertyGroup>
 
   <ItemGroup>
